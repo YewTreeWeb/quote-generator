@@ -20,7 +20,7 @@ import shell from 'shelljs'
 import yargs from 'yargs'
 import pkg from './package.json'
 import webpackConfig from './webpack.config'
-import concat from 'gulp-concat'
+import ghpages from 'gh-pages'
 
 const { prod } = yargs.argv
 
