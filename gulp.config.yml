@@ -14,7 +14,7 @@ copy:
   vendors:
     css: './dist/assets/css'
     js: './dist/assets/js'
-    src: './src/vendors/**/*'
+    src: './src/js/fontawesome-all.min.js'
 
 deploy: 'github'
 
@@ -39,9 +39,7 @@ js:
 
 sass:
   dest: './dist/assets/styles'
-  src:
-    - './src/styles/tailwind.css'
-    - './src/styles/sandbox.scss'
+  src: './src/styles/sandbox.scss'
 
 tailwind: './tailwind.config.js'
 

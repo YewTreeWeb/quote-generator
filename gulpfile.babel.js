@@ -435,7 +435,7 @@ export const build = series(
 export const dev = series(
   parallel(env, clean_dist),
   vendorTask,
-  parallel(sass, js, fonts, images, copyHtml),
+  parallel(sass, js, fonts, images, copyVendors, copyHtml),
   webpImg,
   serve
 )

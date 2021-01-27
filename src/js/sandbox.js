@@ -12,4 +12,6 @@ import './modules/helpers'
 /**
  * Content Goes Here
  */
-console.log("Let's go!!")
+if (process.env.NODE_ENV !== 'production') {
+  console.log("Let's go!!")
+}
