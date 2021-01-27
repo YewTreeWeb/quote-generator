@@ -1,5 +1,6 @@
 import { src, dest, watch, lastRun, series, parallel } from 'gulp'
 import autoprefixer from 'autoprefixer'
+import tailwind from 'tailwindcss'
 import rucksack from 'rucksack-css'
 import webpack from 'webpack'
 import webpackStream from 'webpack-stream'
@@ -19,6 +20,7 @@ import shell from 'shelljs'
 import yargs from 'yargs'
 import pkg from './package.json'
 import webpackConfig from './webpack.config'
+import concat from 'gulp-concat'
 
 const { prod } = yargs.argv
 
@@ -26,7 +28,8 @@ const $ = plugins({
   rename: {
     'gulp-group-css-media-queries': 'gcmq',
     'gulp-sass-glob': 'sassGlob',
-    'gulp-clean-css': 'cleanCSS'
+    'gulp-clean-css': 'cleanCSS',
+    'gulp-postcss': 'gulpPostcss'
   },
   pattern: ['gulp-*', '*', '-', '@*/gulp{-,.}*'],
   replaceString: /\bgulp[\-.]/
@@ -72,36 +75,50 @@ export const sass = () => {
       })
     )
     .pipe(
-      $.postcss([
-        require('postcss-import'),
-        require('tailwindcss'),
+      $.gulpPostcss([
+        tailwind(config.tailwind),
         rucksack({
           fallbacks: true
         }),
-        autoprefixer({
-          grid: true,
-          cascade: false
-        })
+        autoprefixer()
       ])
     )
     .pipe($.gcmq())
     .pipe($.csscomb())
     .pipe(
-      $.cleanCSS({
-        level: {
-          1: {
-            all: true,
-            normalizeUrls: false
-          },
-          2: {
-            all: false,
-            removeEmpty: true,
-            removeDuplicateFontRules: true,
-            removeDuplicateMediaBlocks: true,
-            removeDuplicateRules: true
+      $.if(
+        prod,
+        $.purgecss({
+          content: ['src/**/*.{html,js}'],
+          defaultExtractor: content => {
+            const broadMatches = content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || []
+            const innerMatches =
+              content.match(/[^<>"'`\s.()]*[^<>"'`\s.():]/g) || []
+            return broadMatches.concat(innerMatches)
           }
-        }
-      })
+        })
+      )
+    )
+    .pipe(
+      $.if(
+        prod,
+        $.cleanCSS({
+          compatibility: '*,-properties.merging',
+          level: {
+            1: {
+              all: true,
+              normalizeUrls: false
+            },
+            2: {
+              all: false,
+              removeEmpty: true,
+              removeDuplicateFontRules: true,
+              removeDuplicateMediaBlocks: true,
+              removeDuplicateRules: true
+            }
+          }
+        })
+      )
     )
     .pipe($.if(!prod, $.sourcemaps.write('.')))
     .pipe(
@@ -378,8 +395,25 @@ export const serve = done => {
  * Deploy
  */
 export const deploy = done => {
-  const live = prod ? 'netlify deploy --prod' : 'netlify deploy'
-  shell.exec(live)
+  let live = config.deploy
+  switch (config.deploy) {
+    case 'netlfiy':
+      live = prod ? 'netlify deploy --prod' : 'netlify deploy'
+      break
+    case 'firebase':
+      live = 'firebase deploy'
+      break
+
+    default:
+      break
+  }
+  if (live === 'github') {
+    ghpages.publish('dist', {
+      branch: config.git.branch
+    })
+  } else {
+    shell.exec(live)
+  }
   done()
 }
 

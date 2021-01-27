@@ -65,15 +65,7 @@ module.exports = {
             comments: !prod
           }
         },
-        chunkFilter: chunk => {
-          // Exclude uglification for the `vendor` chunk
-          if (chunk.name === 'vendors') {
-            return false
-          }
-
-          return true
-        },
-        cache: true,
+        parallel: true,
         extractComments: false
       })
     ]
