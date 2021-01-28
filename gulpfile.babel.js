@@ -379,16 +379,17 @@ export const serve = done => {
   done()
 
   watch(config.watch.scss)
-    .on('add', sass)
-    .on('change', sass)
+    .on('add', series(sass, reload))
+    .on('change', series(sass, reload))
   watch(config.watch.js)
     .on('add', series(js, reload))
     .on('change', series(js, reload))
-  watch(config.watch.html, series('copyHtml', reload))
+  watch(config.watch.html, series(copyHtml, reload))
   watch(config.watch.fonts)
     .on('add', series(fonts, reload))
     .on('change', series(fonts, reload))
   watch(config.watch.images, series(images, webpImg, reload))
+  watch(config.tailwind, series(sass, reload))
 }
 
 /**

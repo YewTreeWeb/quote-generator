@@ -1,1 +1,38 @@
 @import 'tailwind';
+
+button {
+  position: relative;
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.375rem;
+    transition: opacity 0s ease-in-out;
+  }
+  &::before {
+    opacity: 1;
+    box-shadow: 0 0.3rem rgba(121, 121, 121, 0.65);
+  }
+  &::after {
+    opacity: 0;
+    box-shadow: 0 0.1rem rgba(121, 121, 121, 0.65);
+  }
+  &:active {
+    transform: translate(0, 0.3rem);
+    outline: none;
+    &::before {
+      opacity: 0;
+    }
+    &::after {
+      opacity: 1;
+    }
+  }
+  &:hover {
+    filter: brightness(110%);
+  }
+}

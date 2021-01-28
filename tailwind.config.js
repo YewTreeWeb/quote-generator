@@ -8,10 +8,22 @@ module.exports = {
     },
     extend: {
       fontSize: {
+        'clamp-lg2xl': ['clamp(1.125rem, 2vw, 1.5rem)', 'max(1.75rem, 2rem)'],
+        'clamp-xl3xl': [
+          'clamp(1.25rem, 2vw, 1.875rem)',
+          'max(1.75rem, 2.25rem)'
+        ],
+        'clamp-2xl4xl': ['clamp(1.5rem, 3vw, 2.25rem)', 'max(2rem, 2.5rem)'],
         'clamp-3xl6xl': ['clamp(1.875rem, 3vw, 3.75rem)', 'max(2.25rem, 100%)']
       },
       width: {
         fit: 'fit-content'
+      },
+      maxWidth: {
+        'screen-900': '900px'
+      },
+      textColor: {
+        twitter: '#38a1f3'
       },
       backgroundImage: theme => ({
         'circuit-pattern':
