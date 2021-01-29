@@ -20,7 +20,7 @@
     "include-media": "^1.4.9",
     "system-font-css": "^2.0.2",
     "tailwindcss": "^2.0.2",
-    "tailwindcss-children": "^2.1.0"
+    "tailwindcss-pseudo-elements": "^1.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

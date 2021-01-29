@@ -1,5 +1,20 @@
 @import 'tailwind';
 
+.loader {
+  border-top-color: rgba(55, 65, 81, var(--tw-bg-opacity));
+  border-bottom-color: rgba(55, 65, 81, var(--tw-bg-opacity));
+  &::before {
+    content: '';
+    display: block;
+    margin: auto;
+    width: 1.25em;
+    height: 1.25em;
+    border: 3px solid rgba(55, 65, 81, var(--tw-bg-opacity));
+    border-radius: 50%;
+    animation: pulse 1s alternate ease-in-out infinite;
+  }
+}
+
 button {
   position: relative;
   &::before,
@@ -31,6 +46,9 @@ button {
     &::after {
       opacity: 1;
     }
+  }
+  &:focus {
+    outline: none;
   }
   &:hover {
     filter: brightness(110%);

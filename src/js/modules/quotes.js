@@ -1,20 +1,26 @@
 class Quotes {
-  constructor (tag) {
+  constructor () {
     // Add API
     this.api = 'https://goquotes-api.herokuapp.com/api/v1/'
     // Set the count
     this.count = 1
-    // Set the tag
-    this.tag = tag || 'general'
-    // Get random method
-    this.method = 'random/'
+  }
+
+  async fetchQuotes (tag) {
+    const getQuotes = await this.getQuotes(tag)
+    const getTags = await this.fetchTags()
+
+    return {
+      getQuotes,
+      getTags
+    }
   }
 
   // Get a random quote
-  async getQuote () {
-    const query = `${this.count}?type=tag&val=${this.tag}`
+  async getQuotes (tag) {
+    const query = `random/${this.count}?type=tag&val=${tag}`
     try {
-      const response = await fetch(this.api + this.method + query)
+      const response = await fetch(this.api + query)
       const data = await response.json()
 
       if (data.status !== 200) {
@@ -24,6 +30,21 @@ class Quotes {
       return data
     } catch (error) {
       console.error('Whoops, no quote!', error)
+    }
+  }
+
+  async fetchTags () {
+    try {
+      const response = await fetch(this.api + 'all/tags')
+      const data = await response.json()
+
+      if (data.status !== 200) {
+        throw new Error('Cannot fetch the api!')
+      }
+
+      return data
+    } catch (error) {
+      console.error('Not able to fetch tags', error)
     }
   }
 }

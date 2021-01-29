@@ -399,10 +399,10 @@ export const deploy = done => {
   let live = config.deploy
   switch (config.deploy) {
     case 'netlfiy':
-      live = prod ? 'netlify deploy --prod' : 'netlify deploy'
+      live = prod ? `${config.deploy} deploy --prod` : `${config.deploy} deploy`
       break
     case 'firebase':
-      live = 'firebase deploy'
+      live = `${config.deploy} deploy`
       break
 
     default:

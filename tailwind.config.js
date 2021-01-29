@@ -6,6 +6,15 @@ module.exports = {
     fontFamily: {
       serif: ['Montserrat', 'sans-serif']
     },
+    keyframes: {
+      spin: {
+        to: { transform: 'rotate(360deg)' }
+      },
+      pulse: {
+        from: { transform: 'scale(0.5)' },
+        to: { transform: 'scale(1)' }
+      }
+    },
     extend: {
       fontSize: {
         'clamp-lg2xl': ['clamp(1.125rem, 2vw, 1.5rem)', 'max(1.75rem, 2rem)'],
@@ -20,7 +29,8 @@ module.exports = {
         fit: 'fit-content'
       },
       maxWidth: {
-        'screen-900': '900px'
+        'screen-900': '900px',
+        'screen-1466': '1466px'
       },
       textColor: {
         twitter: '#38a1f3'
