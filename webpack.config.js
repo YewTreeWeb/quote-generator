@@ -56,18 +56,18 @@ module.exports = {
         }
       }
     },
-    minimize: !!prod,
-    minimizer: [
-      new TerserPlugin({
-        test: /\.js(\?.*)?$/i,
-        terserOptions: {
-          output: {
-            comments: !prod
-          }
-        },
-        parallel: true,
-        extractComments: false
-      })
-    ]
+    minimize: !!prod
+    // minimizer: [
+    //   new TerserPlugin({
+    //     test: /\.js(\?.*)?$/i,
+    //     terserOptions: {
+    //       output: {
+    //         comments: !prod
+    //       }
+    //     },
+    //     parallel: true,
+    //     extractComments: false
+    //   })
+    // ]
   }
 }

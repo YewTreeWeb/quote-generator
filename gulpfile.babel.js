@@ -138,33 +138,30 @@ export const sass = () => {
  * Scripts
  */
 export const js = () => {
-  return (
-    src(config.js.src, { allowEmpty: true })
-      .pipe($.plumber())
-      .pipe(named())
-      .pipe(webpackStream(webpackConfig), webpack)
-      .pipe(
-        $.size({
-          showFiles: true
+  return src(config.js.src, { allowEmpty: true })
+    .pipe($.plumber())
+    .pipe(named())
+    .pipe(webpackStream(webpackConfig), webpack)
+    .pipe(
+      $.size({
+        showFiles: true
+      })
+    )
+    .pipe(
+      $.if(
+        prod,
+        $.rename({
+          suffix: '.min'
         })
       )
-      // .pipe($.if(prod, $.uglify()))
-      .pipe(
-        $.if(
-          prod,
-          $.rename({
-            suffix: '.min'
-          })
-        )
-      )
-      .pipe(
-        $.size({
-          title: 'Minified JS',
-          showFiles: true
-        })
-      )
-      .pipe(dest(config.js.dest))
-  )
+    )
+    .pipe(
+      $.size({
+        title: 'Minified JS',
+        showFiles: true
+      })
+    )
+    .pipe(dest(config.js.dest))
 }
 
 /**
@@ -425,7 +422,7 @@ export const build = series(
   env,
   parallel(clean_dist, clean_cache),
   vendorTask,
-  parallel(sass, js, fonts, images, copyHtml),
+  parallel(sass, js, fonts, images, copyVendors, copyHtml),
   parallel(webpImg, html),
   deploy
 )

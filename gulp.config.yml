@@ -23,7 +23,7 @@ fonts:
   src: './src/fonts/*'
 
 git:
-  branch: 'master'
+  branch: 'gh-pages'
 
 image:
   dest: './dist/assets/images'
