@@ -148,14 +148,6 @@ export const js = () => {
       })
     )
     .pipe(
-      $.if(
-        prod,
-        $.rename({
-          suffix: '.min'
-        })
-      )
-    )
-    .pipe(
       $.size({
         title: 'Minified JS',
         showFiles: true
@@ -346,9 +338,9 @@ export const webpImg = () => {
 
 // Replace URLs
 export const replaceUrls = () => {
-  return src(`${config.html.dest}/*.html`)
+  return src(`${config.copy.html.dest}/*.html`)
     .pipe($.replace('/assets', './assets'))
-    .pipe(dest(config.html.dest))
+    .pipe(dest(config.copy.html.dest))
 }
 
 /**
