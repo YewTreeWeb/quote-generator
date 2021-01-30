@@ -224,6 +224,7 @@ export const clean_dist = () => {
 }
 export const clean_cache = done => {
   $.cache.clearAll()
+  shell.exec('rm -rf node_modules/.cache/gh-pages')
   done()
 }
 
@@ -343,6 +344,13 @@ export const webpImg = () => {
     .pipe(dest(config.image.dest))
 }
 
+// Replace URLs
+export const replaceUrls = () => {
+  return src(`${config.html.dest}/*.html`)
+    .pipe($.replace('/assets', './assets'))
+    .pipe(dest(config.html.dest))
+}
+
 /**
  * Reload browser
  */
@@ -407,7 +415,8 @@ export const deploy = done => {
   }
   if (live === 'github') {
     ghpages.publish('dist', {
-      branch: config.git.branch
+      branch: config.git.branch,
+      repo: config.git.repo
     })
   } else {
     shell.exec(live)
@@ -423,7 +432,8 @@ export const build = series(
   parallel(clean_dist, clean_cache),
   vendorTask,
   parallel(sass, js, fonts, images, copyVendors, copyHtml),
-  parallel(webpImg, html),
+  parallel(webpImg, replaceUrls),
+  html,
   deploy
 )
 
