@@ -407,8 +407,7 @@ export const deploy = done => {
   }
   if (live === 'github') {
     ghpages.publish('dist', {
-      branch: config.git.branch,
-      repo: config.git.repo
+      branch: config.git.branch
     })
   } else {
     shell.exec(live)

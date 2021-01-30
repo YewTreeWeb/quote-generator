@@ -24,7 +24,6 @@ fonts:
 
 git:
   branch: 'gh-pages'
-  repo: 'https://github.com/YewTreeWeb/quote-generator'
 
 image:
   dest: './dist/assets/images'

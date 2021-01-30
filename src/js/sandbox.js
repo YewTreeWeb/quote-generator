@@ -19,7 +19,7 @@ const quotes = new Quotes()
 if (process.env.NODE_ENV !== 'production') console.log("Let's go!!")
 
 // Capitalize first letter
-const capitalize = s => {
+const capitalize = (s) => {
   if (typeof s !== 'string') return ''
   return s.charAt(0).toUpperCase() + s.slice(1)
 }
@@ -49,54 +49,10 @@ const tweetQuote = () => {
   window.open(tweet, '_blank', 'noopener', 'noreferrer')
 }
 
-// Update quote
-const updateQuote = () => {
-  main.classList.remove('opacity-100')
-  setTimeout(() => {
-    loader.classList.remove('hidden')
-    main.classList.add('hidden')
-  }, 150)
-
-  quotes
-    .fetchQuotes(category)
-    .then(data => {
-      const { getQuotes } = data
-      updateUI(getQuotes.quotes)
-    })
-    .then(() => {
-      setTimeout(() => {
-        loader.classList.add('hidden')
-        main.classList.remove('hidden')
-      }, 100)
-      setTimeout(() => {
-        main.classList.add('opacity-100')
-      }, 450)
-    })
-    .catch(error => console.error(error))
-}
-
-// Create UI
-const populateUI = data => {
-  const { getQuotes, getTags } = data
-  const quotes = getQuotes.quotes
-  const tags = getTags.tags
-  const options = Array.from(select.options)
-
-  updateUI(quotes)
-
-  tags.forEach(tag => {
-    if (tag.name === category) {
-      select.options.add(new Option(capitalize(tag.name), tag.name, true, true))
-    } else {
-      select.options.add(new Option(capitalize(tag.name), tag.name))
-    }
-  })
-}
-
 // Update UI
-const updateUI = data => {
-  const author = data[0].author
-  const text = data[0].text
+const updateUI = (data) => {
+  const { author } = data[0]
+  const { text } = data[0]
 
   // Generate HTML
   quoteText.textContent = text
@@ -115,8 +71,50 @@ const updateUI = data => {
   }
 }
 
+// Update quote
+const updateQuote = () => {
+  main.classList.remove('opacity-100')
+  setTimeout(() => {
+    loader.classList.remove('hidden')
+    main.classList.add('hidden')
+  }, 150)
+
+  quotes
+    .fetchQuotes(category)
+    .then((data) => {
+      const { getQuotes } = data
+      updateUI(getQuotes.quotes)
+    })
+    .then(() => {
+      setTimeout(() => {
+        loader.classList.add('hidden')
+        main.classList.remove('hidden')
+      }, 100)
+      setTimeout(() => {
+        main.classList.add('opacity-100')
+      }, 450)
+    })
+    .catch((error) => console.error(error))
+}
+
+// Create UI
+const populateUI = (data) => {
+  const { getQuotes, getTags } = data
+  const { tags } = getTags
+
+  updateUI(getQuotes.quotes)
+
+  tags.forEach((tag) => {
+    if (tag.name === category) {
+      select.options.add(new Option(capitalize(tag.name), tag.name, true, true))
+    } else {
+      select.options.add(new Option(capitalize(tag.name), tag.name))
+    }
+  })
+}
+
 // Change quote tag
-form.addEventListener('submit', e => {
+form.addEventListener('submit', (e) => {
   e.preventDefault()
   category = select.value
   localStorage.setItem('category', select.value)
@@ -126,7 +124,7 @@ form.addEventListener('submit', e => {
 // On load
 quotes
   .fetchQuotes(category)
-  .then(data => {
+  .then((data) => {
     populateUI(data)
   })
   .then(() => {
@@ -139,7 +137,7 @@ quotes
       main.classList.add('opacity-100')
     }, 450)
   })
-  .catch(error => console.error(error))
+  .catch((error) => console.error(error))
 
 // Button events
 newQuote.addEventListener('click', () => {
