@@ -346,9 +346,9 @@ export const webpImg = () => {
 
 // Replace URLs
 export const replaceUrls = () => {
-  return src(`${config.html.dest}/*.html`)
+  return src(`${config.copy.html.dest}/*.html`)
     .pipe($.replace('/assets', './assets'))
-    .pipe(dest(config.html.dest))
+    .pipe(dest(config.copy.html.dest))
 }
 
 /**
@@ -415,8 +415,7 @@ export const deploy = done => {
   }
   if (live === 'github') {
     ghpages.publish('dist', {
-      branch: config.git.branch,
-      repo: config.git.repo
+      branch: config.git.branch
     })
   } else {
     shell.exec(live)

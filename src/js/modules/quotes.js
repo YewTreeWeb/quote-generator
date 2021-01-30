@@ -1,23 +1,23 @@
 class Quotes {
-  constructor () {
+  constructor() {
     // Add API
     this.api = 'https://goquotes-api.herokuapp.com/api/v1/'
     // Set the count
     this.count = 1
   }
 
-  async fetchQuotes (tag) {
+  async fetchQuotes(tag) {
     const getQuotes = await this.getQuotes(tag)
     const getTags = await this.fetchTags()
 
     return {
       getQuotes,
-      getTags
+      getTags,
     }
   }
 
   // Get a random quote
-  async getQuotes (tag) {
+  async getQuotes(tag) {
     const query = `random/${this.count}?type=tag&val=${tag}`
     try {
       const response = await fetch(this.api + query)
@@ -33,9 +33,9 @@ class Quotes {
     }
   }
 
-  async fetchTags () {
+  async fetchTags() {
     try {
-      const response = await fetch(this.api + 'all/tags')
+      const response = await fetch(`${this.api}all/tags`)
       const data = await response.json()
 
       if (data.status !== 200) {
