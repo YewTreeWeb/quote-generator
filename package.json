@@ -13,7 +13,7 @@
     "p:w": "onchange 'src/js/**/*.js' -- prettier --write {{changed}}",
     "webpack": "webpack -config=webpack.config.js",
     "build": "gulp build --prod",
-    "deploy": "gulp deplpy"
+    "deploy": "gulp deploy"
   },
   "dependencies": {
     "airbnb-browser-shims": "^3.3.0",
