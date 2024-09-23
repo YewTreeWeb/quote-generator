@@ -1,8 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.html'],
-  purge: [],
-  darkMode: 'class',
+  content: ['./index.html', './*.js'],
   theme: {
     fontFamily: {
       serif: ['Montserrat', 'sans-serif']

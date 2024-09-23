@@ -5,9 +5,69 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <div id="app"></div>
+  <body
+    class="bg-white bg-circuit-pattern min-h-screen font-serif text-black text-center flex items-center justify-center flex-wrap"
+  >
+    <main id="app" class="my-0 mx-auto">
+      <div id="loading" class="flex flex-wrap justify-center items-center">
+        <div
+          class="loader flex rounded-full border-4 border-solid border-transparent w-20 h-20 animate-spin"
+        ></div>
+        <p class="block w-full mt-8 font-bold text-xl">Getting quote...</p>
+      </div>
+      <section>
+        <div
+          class="container py-6 px-8 rounded-2xl bg-white bg-opacity-50 shadow-lg lg:max-w-screen-900 lg:my-auto lg:mx-6 2xl:max-w-screen-1466"
+          id="quote-container"
+        >
+          <div class="flex justify-center items-start" id="quote-text">
+            <i class="fas fa-quote-left text-7xl mr-6"></i>
+            <h1
+              class="text-2xl text-left sm:text-clamp-2xl4xl lg:text-4xl font-semibold"
+              id="quote"
+            ></h1>
+          </div>
+          <p class="text-clamp-lg2xl my-3 font-normal italic" id="author"></p>
+          <div class="flex justify-between items-center" id="quote-buttons">
+            <button
+              class="cursor-pointer outline-none bg-gray-700 py-2 px-7 text-white text-lg w-fit rounded-md group"
+              id="twitter"
+              title="Tweet This!"
+            >
+              <i class="fab fa-twitter group-hover:text-twitter"></i>
+            </button>
+            <button
+              class="cursor-pointer outline-none bg-gray-700 py-2 px-7 text-white text-lg w-fit rounded-md"
+              id="new-quote"
+            >
+              New Quote
+            </button>
+          </div>
+        </div>
+        <div
+          class="py-6 px-8 rounded-2xl bg-white bg-opacity-50 shadow-lg mt-5 max-w-screen-md mx-auto"
+        >
+          <form class="flex items-center justify-between">
+            <label for="quote-categories">Select quote category</label>
+            <select name="categories" id="quote-categories"></select>
+            <button
+              class="cursor-pointer outline-none bg-gray-700 py-2 px-7 text-white text-lg w-fit rounded-md"
+              type="submit"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
