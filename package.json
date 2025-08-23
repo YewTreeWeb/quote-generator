@@ -22,5 +22,6 @@
     "prettier": "^3.3.3",
     "tailwindcss": "^4.1.12",
     "vite": "^7.1.2"
-  }
+  },
+  "packageManager": "pnpm@10.6.2+sha1.7f417eb782bab712a1a9bd0206887dcee502d03e"
 }
