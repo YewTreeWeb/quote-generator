@@ -1,3 +1,4 @@
+import './fontawesome-all.min.js'
 import './style.css'
 
 document.querySelector('#app').innerHTML = `
@@ -31,3 +32,9 @@ document.querySelector('#app').innerHTML = `
     <p class="block w-full mt-8 font-bold text-xl">Getting quote...</p>
   </div>
 `
+
+// Dynamically load sandbox after DOM has been injected by main
+import('./sandbox.js').catch((e) => {
+  // eslint-disable-next-line no-console
+  console.error('Failed to load sandbox', e)
+})
