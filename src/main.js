@@ -26,8 +26,8 @@ document.querySelector('#app').innerHTML = `
       </form>
     </section>
   </main>
-  <div class="loading flex flex-wrap justify-center items-center">
-    <div class="loader flex rounded-full border-4 border-solid border-transparent w-20 h-20 animate-spin"></div>
+  <div class="loading flex flex-wrap justify-center items-center" role="status" aria-live="polite">
+    <div class="loader flex rounded-full border-4 border-solid w-20 h-20 animate-spin motion-reduce:animate-none border-black/20 border-t-black/70" aria-hidden="true"></div>
     <p class="block w-full mt-8 font-bold text-xl">Getting quote...</p>
   </div>
 `

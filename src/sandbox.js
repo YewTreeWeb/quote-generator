@@ -1,14 +1,9 @@
-/* eslint-disable dot-notation */
-/* eslint-disable no-array-constructor */
-/* eslint-disable no-alert */
-/* eslint-disable no-unused-vars */
-
 // Import internals
 import './modules/helpers'
-// import Quotes from './modules/quotes'
+import Quotes from './modules/quotes'
 
 // Call new quotes class
-// const quotes = new Quotes()
+const quotes = new Quotes()
 
 /**
  * Content Goes Here
@@ -69,76 +64,70 @@ const updateUI = (data) => {
 }
 
 // Update quote
-// const updateQuote = () => {
-//   main.classList.remove('opacity-100')
-//   setTimeout(() => {
-//     loader.classList.remove('hidden')
-//     main.classList.add('hidden')
-//   }, 150)
-
-//   quotes
-//     .fetchQuotes(category)
-//     .then((data) => {
-//       const { getQuotes } = data
-//       updateUI(getQuotes.quotes)
-//     })
-//     .then(() => {
-//       setTimeout(() => {
-//         loader.classList.add('hidden')
-//         main.classList.remove('hidden')
-//       }, 100)
-//       setTimeout(() => {
-//         main.classList.add('opacity-100')
-//       }, 450)
-//     })
-//     .catch((error) => console.error(error))
-// }
+const updateQuote = () => {
+  quotes
+    .fetchQuotes(category)
+    .then((data) => {
+      const { getQuotes } = data
+      updateUI(getQuotes.quotes)
+    })
+    .then(() => {
+      setTimeout(() => {
+        loader.classList.add('hidden')
+        main.classList.remove('hidden')
+      }, 100)
+      setTimeout(() => {
+        main.classList.add('opacity-100')
+      }, 450)
+    })
+    .catch((error) => console.error(error))
+}
 
 // Create UI
-// const populateUI = (data) => {
-//   const { getQuotes, getTags } = data
-//   const { tags } = getTags
+const populateUI = (data) => {
+  const { getQuotes, getTags } = data
+  const { tags } = getTags
 
-//   updateUI(getQuotes.quotes)
+  updateUI(getQuotes.quotes)
 
-//   tags.forEach((tag) => {
-//     if (tag.name === category) {
-//       select.options.add(new Option(capitalize(tag.name), tag.name, true, true))
-//     } else {
-//       select.options.add(new Option(capitalize(tag.name), tag.name))
-//     }
-//   })
-// }
+  tags.forEach((tag) => {
+    if (tag.name === category) {
+      select.options.add(new Option(capitalize(tag.name), tag.name, true, true))
+    } else {
+      select.options.add(new Option(capitalize(tag.name), tag.name))
+    }
+  })
+}
 
 // Change quote tag
 form.addEventListener('submit', (e) => {
   e.preventDefault()
   category = select.value
   localStorage.setItem('category', select.value)
-  // updateQuote()
+  updateQuote()
 })
 
 // On load
-// quotes
-//   .fetchQuotes(category)
-//   .then((data) => {
-//     populateUI(data)
-//   })
-//   .then(() => {
-setTimeout(() => {
-  loader.classList.add('hidden')
-  loaderText.classList.add('hidden')
-  main.classList.remove('hidden')
-}, 100)
-setTimeout(() => {
-  main.classList.add('opacity-100')
-}, 450)
-//   })
-//   .catch((error) => console.error(error))
+quotes
+  .fetchQuotes(category)
+  .then((data) => {
+    populateUI(data)
+  })
+  .then(() => {
+    setTimeout(() => {
+      loader.classList.add('hidden')
+      loaderText.classList.add('hidden')
+      main.classList.remove('hidden')
+    }, 500)
+    setTimeout(() => {
+      main.classList.add('opacity-100')
+    }, 450)
+  })
+  .catch((error) => console.error(error))
 
 // Button events
-// newQuote.addEventListener('click', () => {
-//   updateQuote()
-// })
+newQuote.addEventListener('click', () => {
+  updateQuote()
+})
 
 tweetBtn.addEventListener('click', tweetQuote)

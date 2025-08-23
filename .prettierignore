@@ -1,1 +1,6 @@
 dist/
+build/
+node_modules/
+.vite/
+coverage/
+*.log
