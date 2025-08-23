@@ -28,6 +28,9 @@ const tweetBtn = quoteContainer.querySelector('#twitter')
 const form = main.querySelector('form')
 const select = form.querySelector('#quote-categories')
 
+// Improve accessibility labels
+select.setAttribute('aria-label', 'Quote categories')
+
 // Set category value
 let category = localStorage.getItem('category')
   ? localStorage.getItem('category')
@@ -61,10 +64,21 @@ const updateUI = (data) => {
     quoteText.classList.remove('text-xl', 'sm:text-clamp-xl3xl', 'lg:text-3xl')
     quoteText.classList.add('text-2xl', 'sm:text-clamp-2xl4xl', 'lg:text-4xl')
   }
+
+  // Move focus to the updated quote for screen readers
+  setTimeout(() => {
+    try {
+      quoteText.focus()
+    } catch (_) {
+      /* noop */
+    }
+  }, 0)
 }
 
 // Update quote
 const updateQuote = () => {
+  // Indicate background loading
+  main.setAttribute('aria-busy', 'true')
   quotes
     .fetchQuotes(category)
     .then((data) => {
@@ -75,6 +89,8 @@ const updateQuote = () => {
       setTimeout(() => {
         loader.classList.add('hidden')
         main.classList.remove('hidden')
+        loader.setAttribute('aria-hidden', 'true')
+        main.setAttribute('aria-busy', 'false')
       }, 100)
       setTimeout(() => {
         main.classList.add('opacity-100')
@@ -118,6 +134,8 @@ quotes
       loader.classList.add('hidden')
       loaderText.classList.add('hidden')
       main.classList.remove('hidden')
+      loader.setAttribute('aria-hidden', 'true')
+      main.setAttribute('aria-busy', 'false')
     }, 500)
     setTimeout(() => {
       main.classList.add('opacity-100')
